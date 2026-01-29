@@ -7,8 +7,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
-var app = builder.Build();
-
 builder.Services.AddHttpClient("RickAndMortyApi", client =>
 {
     client.BaseAddress = new Uri("https://rickandmortyapi.com/api/character");
@@ -17,6 +15,7 @@ builder.Services.AddHttpClient("RickAndMortyApi", client =>
 
 builder.Services.AddScoped<IRickMortyService, RickMortyService>();
 
+var app = builder.Build();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
