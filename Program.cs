@@ -1,4 +1,5 @@
 using ProyectoRickYMorty.Components;
+using ProyectoRickYMorty.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +9,13 @@ builder.Services.AddRazorComponents()
 
 var app = builder.Build();
 
-builder.Services.AddScoped(sp => new HttpClient 
-{ 
-    BaseAddress = new Uri("https://rickandmortyapi.com/api/character") 
+builder.Services.AddHttpClient("RickAndMortyApi", client =>
+{
+    client.BaseAddress = new Uri("https://rickandmortyapi.com/api/character");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
 });
 
-builder.Services.AddScoped<RickMortyService>();
+builder.Services.AddScoped<IRickMortyService, RickMortyService>();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
