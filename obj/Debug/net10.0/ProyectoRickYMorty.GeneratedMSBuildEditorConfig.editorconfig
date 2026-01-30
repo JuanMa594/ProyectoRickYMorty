@@ -26,8 +26,8 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xBcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Users/Hogar/Documents/Juan/ESTUDIO/Programming/ProyectoRickYMorty/Components/Pages/Counter.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDb3VudGVyLnJhem9y
+[C:/Users/Hogar/Documents/Juan/ESTUDIO/Programming/ProyectoRickYMorty/Components/Pages/Characters.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xDaGFyYWN0ZXJzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Hogar/Documents/Juan/ESTUDIO/Programming/ProyectoRickYMorty/Components/Pages/Error.razor]
@@ -40,10 +40,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Hogar/Documents/Juan/ESTUDIO/Programming/ProyectoRickYMorty/Components/Pages/NotFound.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xOb3RGb3VuZC5yYXpvcg==
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Hogar/Documents/Juan/ESTUDIO/Programming/ProyectoRickYMorty/Components/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xQYWdlc1xXZWF0aGVyLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Hogar/Documents/Juan/ESTUDIO/Programming/ProyectoRickYMorty/Components/Routes.razor]
