@@ -5,6 +5,47 @@ html, body {
 a, .btn-link {
     color: #006bb7;
 }
+/* ---------------------------------- SIDEBAR -------------------------------- */
+.brand-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 18px 12px;
+}
+.brand-container:hover .brand-logo {
+    transform: scale(1.05) rotate(-1deg);
+}
+.brand-logo {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(194, 242, 206, 0.6));
+    transition: transform 0.25s ease;
+}
+.brand-text {
+    font-family: 'GetSchwifty', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.05;
+    color: #C2F2CE;
+    letter-spacing: 1px;
+    animation: brandPulse 4s ease-in-out infinite;
+
+    /* glow sutil */
+    text-shadow:
+        0 0 4px rgba(194, 242, 206, 0.8),
+        0 0 10px rgba(194, 242, 206, 0.4);
+}
+
+@keyframes brandPulse {
+    0%   { text-shadow: 0 0 4px rgba(194,242,206,0.6); }
+    50%  { text-shadow: 0 0 10px rgba(194,242,206,1); }
+    100% { text-shadow: 0 0 4px rgba(194,242,206,0.6); }
+}
+@media (prefers-reduced-motion: reduce) {
+    .brand-text {
+        animation: none;
+    }
+}
 
 .sidebar-glass {
     position: fixed;
@@ -70,7 +111,59 @@ a, .btn-link {
         filter: blur(0.2px);
     }
 }
+/* ---------------------------------- HOME PAGE -------------------------------- */
+.home-container {
+    min-height: calc(100vh - 60px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 22px;
+    text-align: center;
+}
+.home-logo {
+    width: 110px;
+    height: 110px;
+    object-fit: contain;
 
+    filter: drop-shadow(0 0 10px rgba(194, 242, 206, 0.4));
+}
+.home-title {
+    font-family: 'GetSchwifty', sans-serif;
+    font-size: 2.2rem;
+    font-weight: normal;
+    color: #C2F2CE;
+    letter-spacing: 1.5px;
+
+    text-shadow:
+        0 0 6px rgba(194, 242, 206, 0.6),
+        0 0 14px rgba(194, 242, 206, 0.25);
+}
+.home-button {
+    margin-top: 10px;
+    padding: 10px 26px;
+    border-radius: 14px;
+
+    background: rgba(194, 242, 206, 0.18);
+    color: #C2F2CE;
+    font-weight: 500;
+    text-decoration: none;
+
+    border: 1px solid rgba(194, 242, 206, 0.35);
+    backdrop-filter: blur(10px);
+
+    transition: all 0.25s ease;
+}
+.home-button:hover {
+    background: rgba(194, 242, 206, 0.28);
+    box-shadow: 0 0 12px rgba(194, 242, 206, 0.35);
+    transform: translateY(-1px);
+}
+@media (prefers-reduced-motion: reduce) {
+    .home-button:hover {
+        transform: none;
+    }
+}
 
 .btn-primary {
     color: #fff;
@@ -123,4 +216,11 @@ h1:focus {
 
 .form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
     text-align: start;
+}
+
+@font-face {
+    font-family: 'GetSchwifty';
+    src: url('/Fonts/get_schwifty.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
