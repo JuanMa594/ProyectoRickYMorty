@@ -4,7 +4,7 @@
 @using ProyectoRickYMorty.Models;
 @inject IRickMortyService ApiService
 
-<PageTitle>Rick Y Morty - Personajes</PageTitle>
+<PageTitle>Personajes de Rick Y Morty</PageTitle>
 
 <div class="container-fluid py-4">
     <div class="row mb-4">
@@ -55,7 +55,7 @@
                             <div class="mb-3 flex-grow-1">
                                 <p class="card-text mb-1">
                                     <small class="text-muted">
-                                        <i class="bi bi-geo-alt-fill"></i> 
+                                        <i class="bi bi-person-square"></i>
                                         <strong>Especie:</strong> @character.Species
                                     </small>
                                 </p>
@@ -87,11 +87,11 @@
 
                             <!-- Botones Like/Dislike -->
                             <div class="d-flex gap-2">
-                                <button class="btn btn-success flex-fill @(HasLiked(character.Id) ? "active" : "")" 
+                                <button class="btn btn-success flex-fill" 
                                         @onclick="() => HandleLike(character.Id)">
                                     <i class="bi bi-hand-thumbs-up-fill"></i> Like
                                 </button>
-                                <button class="btn btn-danger flex-fill @(HasDisliked(character.Id) ? "active" : "")" 
+                                <button class="btn btn-danger flex-fill" 
                                         @onclick="() => HandleDislike(character.Id)">
                                     <i class="bi bi-hand-thumbs-down-fill"></i> Dislike
                                 </button>
@@ -173,9 +173,6 @@
 
     // Diccionario para almacenar puntajes (Id del personaje -> puntaje)
     private Dictionary<int, int> scores = new();
-    
-    // Diccionario para rastrear likes/dislikes (Id del personaje -> "like"/"dislike"/null)
-    private Dictionary<int, string?> votes = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -202,10 +199,6 @@
                     if (!scores.ContainsKey(character.Id))
                     {
                         scores[character.Id] = 0;
-                    }
-                    if (!votes.ContainsKey(character.Id))
-                    {
-                        votes[character.Id] = null;
                     }
                 }
             }
@@ -250,65 +243,27 @@
 
     private void HandleLike(int characterId)
     {
-        var currentVote = votes.GetValueOrDefault(characterId);
-
-        if (currentVote == "like")
+        // Siempre suma 1 al puntaje
+        if (!scores.ContainsKey(characterId))
         {
-            // Ya tiene like, remover (toggle)
-            votes[characterId] = null;
-            scores[characterId]--;
+            scores[characterId] = 0;
         }
-        else if (currentVote == "dislike")
-        {
-            // Cambiar de dislike a like (serían +2 para que quede positivo el voto)
-            votes[characterId] = "like";
-            scores[characterId] += 2;
-        }
-        else
-        {
-            // No tiene voto, agregar like
-            votes[characterId] = "like";
-            scores[characterId]++;
-        }
+        scores[characterId]++;
     }
 
     private void HandleDislike(int characterId)
     {
-        var currentVote = votes.GetValueOrDefault(characterId);
-
-        if (currentVote == "dislike")
+        // Siempre resta 1 al puntaje
+        if (!scores.ContainsKey(characterId))
         {
-            // Ya tiene dislike, remover (toggle)
-            votes[characterId] = null;
-            scores[characterId]++;
+            scores[characterId] = 0;
         }
-        else if (currentVote == "like")
-        {
-            // Cambiar de like a dislike (serían -2, para que quede negativo el voto)
-            votes[characterId] = "dislike";
-            scores[characterId] -= 2;
-        }
-        else
-        {
-            // No tiene voto, agregar dislike
-            votes[characterId] = "dislike";
-            scores[characterId]--;
-        }
+        scores[characterId]--;
     }
 
     private int GetScore(int characterId)
     {
         return scores.GetValueOrDefault(characterId, 0);
-    }
-
-    private bool HasLiked(int characterId)
-    {
-        return votes.GetValueOrDefault(characterId) == "like";
-    }
-
-    private bool HasDisliked(int characterId)
-    {
-        return votes.GetValueOrDefault(characterId) == "dislike";
     }
 
     private string GetStatusBadgeClass(string status)

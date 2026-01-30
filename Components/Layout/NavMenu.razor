@@ -11,7 +11,6 @@
         </span>
     </div>
 
-
     <!-- Toggle (Blazor default) -->
     <input type="checkbox"
            title="Navigation menu"
@@ -21,24 +20,22 @@
     <div class="nav-scrollable"
          onclick="document.querySelector('.navbar-toggler').click()">
         <nav class="nav flex-column sidebar-content">
-            <div class="nav-item">
-                <NavLink class="nav-link"
+            <div class="nav-item px-3 py-2">
+                <NavLink class="nav-link d-flex align-items-center py-3 px-3 rounded-3"
                          href=""
                          Match="NavLinkMatch.All">
-                    <span class="bi bi-house-door-fill me-2"></span>
-                    Home
+                    <span class="bi bi-house-door-fill nav-icon"></span>
+                    <span class="nav-text">Home</span>
                 </NavLink>
             </div>
 
-            <div class="nav-item">
-                <NavLink class="nav-link"
+            <div class="nav-item px-3 py-2">
+                <NavLink class="nav-link d-flex align-items-center py-3 px-3 rounded-3"
                          href="characters">
-                    <span class="bi bi-plus-square-fill me-2"></span>
-                    Personajes
+                    <span class="bi bi-people-fill nav-icon"></span>
+                    <span class="nav-text">Personajes</span>
                 </NavLink>
             </div>
         </nav>
     </div>
 </aside>
-
-
