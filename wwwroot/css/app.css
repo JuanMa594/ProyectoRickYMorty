@@ -25,7 +25,7 @@ a, .btn-link {
 .brand-text {
     font-family: 'GetSchwifty', sans-serif;
     font-size: 1.05rem;
-    line-height: 1.05;
+    line-height: 1.1;
     color: #C2F2CE;
     letter-spacing: 1px;
     animation: brandPulse 4s ease-in-out infinite;
@@ -62,54 +62,86 @@ a, .btn-link {
     border-right: 1px solid rgba(194, 242, 206, 0.35);
     box-shadow: 6px 0 28px rgba(0, 0, 0, 0.25);
 }
-.sidebar-content .nav-link {
+
+/* Espaciado del menú */
+.sidebar-content {
+    padding-top: 1rem;
+}
+
+.nav-item {
+    margin-bottom: 0.25rem;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    color: rgba(194, 242, 206, 0.75);
-    padding: 12px 14px 12px 18px;
-    border-radius: 12px;
-    margin-bottom: 6px;
-    font-weight: 500;
-    transition: background 0.25s ease, color 0.25s ease;
+    overflow: hidden;
 }
-.sidebar-content .nav-link.active {
-    background: rgba(194, 242, 206, 0.22);
-    color: #61c97b;
+
+.nav-link:hover {
+    background-color: rgba(230, 247, 253, 0.048) !important;
+    color: white !important;
+    transform: translateX(3px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
-.sidebar-content .nav-link.active::before {
-    content: "";
+
+.nav-link.active {
+    background-color: rgba(249, 249, 249, 0.226) !important;
+    color: white !important;
+    font-weight: 600;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.nav-link.active::before {
+    content: '';
     position: absolute;
     left: 0;
-    top: 10%;
+    top: 0;
+    bottom: 0;
     width: 4px;
-    height: 80%;
-    border-radius: 4px;
-
-    background: linear-gradient(
-        180deg,
-        #C2F2CE,
-        #8fdcc0,
-        #C2F2CE
-    );
-
-    box-shadow:
-        0 0 8px rgba(194, 242, 206, 0.8),
-        0 0 16px rgba(194, 242, 206, 0.4);
-
-    animation: activeGlow 3s ease-in-out infinite;
+    background: #b6f0c7;
+    border-radius: 0 4px 4px 0;
 }
-@keyframes activeGlow {
-    0% {
-        opacity: 0.6;
-        filter: blur(0.2px);
-    }
-    50% {
-        opacity: 1;
-        filter: blur(0.6px);
-    }
-    100% {
-        opacity: 0.6;
-        filter: blur(0.2px);
-    }
+
+.nav-icon {
+    font-size: 1.25rem;
+    width: 2rem;
+    height: 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 1rem;
+    flex-shrink: 0;
+    line-height: 1;          
+    vertical-align: middle; 
+    transition: transform 0.3s ease;
+}
+
+.nav-link:hover .nav-icon {
+    transform: scale(1.15);
+}
+
+.nav-text {
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+}
+
+/* Animación de ripple al hacer clic */
+.nav-link::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.nav-link:active::after {
+    width: 300px;
+    height: 300px;
 }
 /* ---------------------------------- HOME PAGE -------------------------------- */
 .home-container {
@@ -174,6 +206,29 @@ a, .btn-link {
     }
 }
 /* ---------------------------------- CHARACTERS PAGE -------------------------------- */
+/* ----- Estilos para la barra de filtros --------*/
+.card-title {
+    color: #495057;
+    font-weight: 600;
+}
+
+.form-label {
+    color: #495057;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.alert-info {
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+    color: #084298;
+}
 /* -----Estilos para las tarjetas de personajes------*/
 .character-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
