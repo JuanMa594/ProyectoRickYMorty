@@ -149,7 +149,7 @@ ProyectoRickYMorty/
 ├── Program.cs                      # Configuración de la aplicación
 └── appsettings.json                # Configuración general
 ```
-*NOTA: Ahí se hizo la estructura general del proyecto, colocando los archivos o carpetas que se añadieron o modificaron, sin contar archivos o carpetas adicionales que sirven más que todo para una correcta funcionalidad del proyecto.*
+*NOTA: Ahí se hizo la estructura general del proyecto, colocando los archivos o carpetas que se añadieron, modificaron o se programaron, sin contar archivos o carpetas adicionales que sirven más que todo para una correcta funcionalidad del proyecto.*
 
 ###   Componentes Clave
 
