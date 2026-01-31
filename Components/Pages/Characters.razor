@@ -14,6 +14,102 @@
             </h1>
         </div>
     </div>
+    <!-- Barra de filtros -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">
+                        <i class="bi bi-funnel-fill me-2"></i>Filtros
+                    </h5>
+                    
+                    <div class="row g-3">
+                        <!-- Filtro por Nombre -->
+                        <div class="col-md-4">
+                            <label for="filterName" class="form-label fw-semibold">
+                                <i class="bi bi-search me-1"></i>Nombre
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="filterName"
+                                   placeholder="Ej: Rick, Morty..."
+                                   @bind="filterName"
+                                   @bind:event="oninput" />
+                        </div>
+
+                        <!-- Filtro por Estado -->
+                        <div class="col-md-4">
+                            <label for="filterStatus" class="form-label fw-semibold">
+                                <i class="bi bi-heart-pulse-fill me-1"></i>Estado
+                            </label>
+                            <select class="form-select" 
+                                    id="filterStatus"
+                                    @bind="filterStatus">
+                                <option value="">Todos</option>
+                                <option value="alive">Vivo</option>
+                                <option value="dead">Muerto</option>
+                                <option value="unknown">Desconocido</option>
+                            </select>
+                        </div>
+
+                        <!-- Filtro por Especie -->
+                        <div class="col-md-4">
+                            <label for="filterSpecies" class="form-label fw-semibold">
+                                <i class="bi bi-diagram-3-fill me-1"></i>Especie
+                            </label>
+                            <input type="text" 
+                                   class="form-control" 
+                                   id="filterSpecies"
+                                   placeholder="Ej: Human, Alien..."
+                                   @bind="filterSpecies"
+                                   @bind:event="oninput" />
+                        </div>
+                    </div>
+
+                    <!-- Botones de acción -->
+                    <div class="row mt-3">
+                        <div class="col-12 d-flex gap-2 justify-content-end">
+                            <button class="btn btn-primary" 
+                                    @onclick="ApplyFilters"
+                                    disabled="@loading">
+                                <i class="bi bi-search me-1"></i>
+                                Buscar
+                            </button>
+                            <button class="btn btn-outline-secondary" 
+                                    @onclick="ClearFilters"
+                                    disabled="@loading">
+                                <i class="bi bi-x-circle me-1"></i>
+                                Limpiar
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de resultados -->
+                    @if (!string.IsNullOrEmpty(filterName) || !string.IsNullOrEmpty(filterStatus) || !string.IsNullOrEmpty(filterSpecies))
+                    {
+                        <div class="alert alert-info mt-3 mb-0 d-flex align-items-center" role="alert">
+                            <i class="bi bi-info-circle-fill me-2"></i>
+                            <span>
+                                Mostrando <strong>@totalCharacters</strong> resultados
+                                @if (!string.IsNullOrEmpty(filterName))
+                                {
+                                    <span> con nombre "<strong>@filterName</strong>"</span>
+                                }
+                                @if (!string.IsNullOrEmpty(filterStatus))
+                                {
+                                    <span> | Estado: <strong>@GetStatusLabel(filterStatus)</strong></span>
+                                }
+                                @if (!string.IsNullOrEmpty(filterSpecies))
+                                {
+                                    <span> | Especie: <strong>@filterSpecies</strong></span>
+                                }
+                            </span>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
 
     @if (loading)
     {
@@ -171,8 +267,13 @@
     private int totalPages = 1;
     private int totalCharacters = 0;
 
-    // Diccionario para almacenar puntajes (Id del personaje -> puntaje)
+    // Diccionario para almacenar puntajes
     private Dictionary<int, int> scores = new();
+
+    // 🆕 VARIABLES DE FILTROS
+    private string filterName = string.Empty;
+    private string filterStatus = string.Empty;
+    private string filterSpecies = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -185,7 +286,22 @@
         
         try
         {
-            var response = await ApiService.GetCharactersAsync(currentPage);
+            ApiResponse<Character>? response;
+
+            // Si hay filtros activos, usar FilterCharactersAsync
+            if (!string.IsNullOrEmpty(filterName) || !string.IsNullOrEmpty(filterStatus) || !string.IsNullOrEmpty(filterSpecies))
+            {
+                response = await ApiService.FilterCharactersAsync(
+                    name: string.IsNullOrEmpty(filterName) ? null : filterName,
+                    status: string.IsNullOrEmpty(filterStatus) ? null : filterStatus,
+                    species: string.IsNullOrEmpty(filterSpecies) ? null : filterSpecies
+                );
+            }
+            else
+            {
+                // Sin filtros, usar GetCharactersAsync normal
+                response = await ApiService.GetCharactersAsync(currentPage);
+            }
 
             if (response != null)
             {
@@ -212,6 +328,32 @@
         {
             loading = false;
         }
+    }
+
+    private async Task ApplyFilters()
+    {
+        currentPage = 1; // Resetear a página 1 al filtrar
+        await LoadCharacters();
+    }
+
+    private async Task ClearFilters()
+    {
+        filterName = string.Empty;
+        filterStatus = string.Empty;
+        filterSpecies = string.Empty;
+        currentPage = 1;
+        await LoadCharacters();
+    }
+
+    private string GetStatusLabel(string status)
+    {
+        return status.ToLower() switch
+        {
+            "alive" => "Vivo",
+            "dead" => "Muerto",
+            "unknown" => "Desconocido",
+            _ => status
+        };
     }
 
     private async Task NextPage()
@@ -243,7 +385,6 @@
 
     private void HandleLike(int characterId)
     {
-        // Siempre suma 1 al puntaje
         if (!scores.ContainsKey(characterId))
         {
             scores[characterId] = 0;
@@ -253,7 +394,6 @@
 
     private void HandleDislike(int characterId)
     {
-        // Siempre resta 1 al puntaje
         if (!scores.ContainsKey(characterId))
         {
             scores[characterId] = 0;

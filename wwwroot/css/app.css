@@ -206,6 +206,29 @@ a, .btn-link {
     }
 }
 /* ---------------------------------- CHARACTERS PAGE -------------------------------- */
+/* ----- Estilos para la barra de filtros --------*/
+.card-title {
+    color: #495057;
+    font-weight: 600;
+}
+
+.form-label {
+    color: #495057;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+.alert-info {
+    background-color: #cfe2ff;
+    border-color: #b6d4fe;
+    color: #084298;
+}
 /* -----Estilos para las tarjetas de personajes------*/
 .character-card {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
