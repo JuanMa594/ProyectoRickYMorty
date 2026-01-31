@@ -307,8 +307,8 @@ La aplicación implementa tres tipos de filtros que se pueden combinar:
 |------------|---------|-----------|
 | .NET | 10.0 | Framework principal |
 | Blazor | .NET 10 | Frontend interactivo |
-| Bootstrap | 5.x | Framework CSS |
-| Bootstrap Icons | 1.11.x | Iconografía |
+| Bootstrap | 5.3.8 | Framework CSS |
+| Bootstrap Icons | 1.11.0 | Iconografía |
 | C# | 12.0 | Lenguaje de programación |
 | Rick and Morty API | v1 | Fuente de datos |
 
@@ -317,13 +317,18 @@ La aplicación implementa tres tipos de filtros que se pueden combinar:
 ## Capturas de Pantalla
 
 ### Galería de Personajes
-![Galería](screenshot-gallery.png)
+![Galería](docs/Captura%20de%20pantalla(1).png)
 
 ### Filtros
-![Filtros](screenshot-filters.png)
+![Filtros](docs/Captura%20de%20pantalla(2).png)
 
 ### Menú de Navegación
-![Menú](screenshot-menu.png)
+![Menú](docs/Captura%20de%20pantalla%20(3).png)
+
+---
+
+## Pruebas Funcionales
+**Se agregó un archivo llamado Pruebas en la carpeta docs, en donde se puede encontrar las Pruebas funcionales para el proyecto**
 
 ---
 
@@ -333,6 +338,7 @@ La aplicación implementa tres tipos de filtros que se pueden combinar:
 - [ ] Agregar página de detalles por personaje, en donde el usuario pueda acceder a una página con cada detalle del personaje, más fotos del personaje, y en qué episodio(s) aparece
 - [ ] Agregar modo oscuro
 - [ ] Implementar PWA (Progressive Web App)
+- [ ] Hacerla Responsiva para todo tipo de dispositivos
 
 ---
 
