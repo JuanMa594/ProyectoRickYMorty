@@ -1,4 +1,4 @@
-#  Proyecto Rick Y Morty - Blazor Frontend
+#  Proyecto Rick Y Morty - Juan Usuga
 
 ![Rick and Morty](https://e7.pngegg.com/pngimages/479/224/png-clipart-rick-and-morty-rick-sanchez-rick-and-morty-season-3-adult-swim-rick-and-morty-season-2-episode-rick-and-morty-grass-fictional-character.png)
 
