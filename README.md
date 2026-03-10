@@ -7,8 +7,8 @@
 Este proyecto es una aplicación web interactiva desarrollada en **Blazor .NET 10** que consume la [API de Rick and Morty](https://rickandmortyapi.com/) para mostrar información de los personajes de la serie. La aplicación permite a los usuarios explorar personajes, filtrarlos por diferentes criterios, y votar mediante un sistema de likes/dislikes.
 
 ## Índice
-- [Características Principales](#Características Principales)
-- [Instalación](#instrucciones para ejecutar la app)
+- [Características Principales](#características-principales)
+- [Instalación](#instrucciones-para-ejecutar-la-app)
 - [Uso](#uso)
 - [Tecnologías](#tecnologías)
 - [Contribución](#contribución)
