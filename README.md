@@ -9,9 +9,11 @@ Este proyecto es una aplicación web interactiva desarrollada en **Blazor .NET 1
 ## Índice
 - [Características Principales](#características-principales)
 - [Instalación](#instrucciones-para-ejecutar-la-app)
-- [Uso](#uso)
-- [Tecnologías](#tecnologías)
-- [Contribución](#contribución)
+- [Cómo se Consumió la API](#cómo-se-consumió-la-api)
+- [Estructura del Código](#estructura-del-código)
+- [Funcionalidades Adicionales](#funcionalidades-adicionales)
+- [Decisiones Técnicas](#decisiones-técnicas)
+- [Decisiones Técnicas](#decisiones-técnicas)
 
 ---
 
