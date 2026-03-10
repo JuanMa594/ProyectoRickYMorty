@@ -13,7 +13,8 @@ Este proyecto es una aplicación web interactiva desarrollada en **Blazor .NET 1
 - [Estructura del Código](#estructura-del-código)
 - [Funcionalidades Adicionales](#funcionalidades-adicionales)
 - [Decisiones Técnicas](#decisiones-técnicas)
-- [Decisiones Técnicas](#decisiones-técnicas)
+- [Tecnologías Utilizadas](#tecnologías-utilizadas)
+- [Capturas de Pantalla](#capturas-de-pantalla)
 
 ---
 
