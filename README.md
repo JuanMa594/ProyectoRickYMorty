@@ -20,7 +20,7 @@ Este proyecto es una aplicación web interactiva desarrollada en **Blazor .NET 1
 
 ###     Características Principales
 
-- **Galería de personajes** en formato grid responsivo
+- **Galería de personajes** en formato grid
 - **Sistema de votación** (likes/dislikes) con puntaje en tiempo real
 - **Filtros avanzados** por nombre, especie y estado
 - **Paginación completa** con navegación intuitiva
