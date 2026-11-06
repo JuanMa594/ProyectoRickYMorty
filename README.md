@@ -1,96 +1,96 @@
-#  Proyecto Rick Y Morty - Juan Usuga
+#  Rick and Morty Project - Juan Usuga
 
-![Rick and Morty](https://e7.pngegg.com/pngimages/479/224/png-clipart-rick-and-morty-rick-sanchez-rick-and-morty-season-3-adult-swim-rick-and-morty-season-2-episode-rick-and-morty-grass-fictional-character.png)
+![Rick and Morty](https://tse3.mm.bing.net/th/id/OIP.B62kM7etxlckDEVuy9ULJQHaIX?r=0&rs=1&pid=ImgDetMain&o=7&rm=3)
 
-## Descripción General
+## Overview
 
-Este proyecto es una aplicación web interactiva desarrollada en **Blazor .NET 10** que consume la [API de Rick and Morty](https://rickandmortyapi.com/) para mostrar información de los personajes de la serie. La aplicación permite a los usuarios explorar personajes, filtrarlos por diferentes criterios, y votar mediante un sistema de likes/dislikes.
+This project is an interactive web application developed in **Blazor .NET 10** that uses the [Rick and Morty API](https://rickandmortyapi.com/) to display information about the characters from the series. The application allows users to explore characters, filter them by different criteria, and vote using a likes/dislikes system.
 
-## Índice
-- [Características Principales](#características-principales)
-- [Instalación](#instrucciones-para-ejecutar-la-app)
-- [Cómo se Consumió la API](#cómo-se-consumió-la-api)
-- [Estructura del Código](#estructura-del-código)
-- [Funcionalidades Adicionales](#funcionalidades-adicionales)
-- [Decisiones Técnicas](#decisiones-técnicas)
-- [Tecnologías Utilizadas](#tecnologías-utilizadas)
-- [Capturas de Pantalla](#capturas-de-pantalla)
-
----
-
-###     Características Principales
-
-- **Galería de personajes** en formato grid
-- **Sistema de votación** (likes/dislikes) con puntaje en tiempo real
-- **Filtros avanzados** por nombre, especie y estado
-- **Paginación completa** con navegación intuitiva
-- **Diseño moderno** con animaciones y efectos visuales
-- **Arquitectura limpia** siguiendo principios SOLID
+## Table of Contents
+- [Key Features](#key-features)
+- [Installation](#instructions-for-running-the-app)
+- [How the API Was Used](#how-the-api-was-used)
+- [Code Structure](#code-structure)
+- [Additional Features](#additional-features)
+- [Technical Decisions](#technical-decisions)
+- [Technologies Used](#technologies-used)
+- [Screenshots](#screenshots)
 
 ---
 
-## Instrucciones para Ejecutar la App
+### Key Features
 
-###     Requisitos Previos
+- **Character gallery** in grid format
+- **Voting system** (likes/dislikes) with real-time scoring
+- **Advanced filters** by name, species, and status
+- **Full pagination** with intuitive navigation
+- **Modern design** with animations and visual effects
+- **Clean architecture** following SOLID principles
 
-- **.NET SDK 10.0** o superior
-- Un editor de código (Visual Studio, VS Code, o Rider)
-- Navegador web moderno
+---
 
-###     Instalación
+## Instructions for Running the App
 
-1. **Clonar el repositorio:**
+### Prerequisites
+
+- **.NET SDK 10.0** or later
+- A code editor (Visual Studio, VS Code, or Rider)
+- A modern web browser
+
+### Installation
+
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/JuanMa594/ProyectoRickYMorty.git
-   cd ProyectoRickYMorty
+   cd RickAndMortyProject
    ```
 
-2. **Restaurar dependencias:**
+2. **Restore dependencies:**
    ```bash
    dotnet restore
    ```
 
-3. **Ejecutar la aplicación:**
+3. **Run the application:**
    ```bash
    dotnet run
    ```
 
-4. **Abrir en el navegador:**
+4. **Open in the browser:**
    ```
    https://localhost:5001
    ```
-   O la URL que se muestre en la consola.
+   Or the URL displayed in the console.
 
 
 ---
 
-## Cómo se Consumió la API
+## How the API Was Used
 
-###     Endpoint Utilizado
+###     Endpoint Used
 
-La aplicación consume el endpoint de **Characters** de la API de Rick and Morty:
+The application consumes the **Characters** endpoint of the Rick and Morty API:
 
 ```
 Base URL: https://rickandmortyapi.com/api/character
 ```
 
-###     Implementación
+###     Implementation
 
-#### 1. Configuración de HttpClient
+#### 1. Configuring HttpClient
 
-En `Program.cs`:
+In `Program.cs`:
 
 ```csharp
-builder.Services.AddHttpClient("RickAndMortyApi", client =>
+builder.Services.AddHttpClient(“RickAndMortyApi”, client =>
 {
-    client.BaseAddress = new Uri("https://rickandmortyapi.com/api/character");
-    client.DefaultRequestHeaders.Add("Accept", "application/json");
+    client.BaseAddress = new Uri(“https://rickandmortyapi.com/api/character”);
+    client.DefaultRequestHeaders.Add(“Accept”, “application/json”);
 });
 ```
 
-#### 2. Servicio de Abstracción
+#### 2. Abstraction Service
 
-Se implementó una capa de servicio siguiendo el patrón **Repository**:
+A service layer was implemented following the **Repository** pattern:
 
 ```csharp
 public interface IRickAndMortyService
@@ -101,259 +101,260 @@ public interface IRickAndMortyService
     Task<ApiResponse<Character>> FilterCharactersAsync(...);
 }
 ```
+#### 3. Available Operations
 
-#### 3. Operaciones Disponibles
-
-| Método | Descripción | Endpoint |
+| Method | Description | Endpoint |
 |--------|-------------|----------|
-| `GetCharactersAsync(page)` | Obtiene personajes paginados | `GET /character?page={page}` |
-| `GetByIdAsync(id)` | Obtiene un personaje por ID | `GET /character/{id}` |
-| `GetMultipleCharactersAsync(ids)` | Obtiene múltiples personajes | `GET /character/{id1},{id2}` |
-| `FilterCharactersAsync(...)` | Filtra personajes | `GET /character?name=...&status=...` |
+| `GetCharactersAsync(page)` | Retrieves paginated characters | `GET /character?page={page}` |
+| `GetByIdAsync(id)` | Retrieves a character by ID | `GET /character/{id}` |
+| `GetMultipleCharactersAsync(ids)` | Retrieves multiple characters | `GET /character/{id1},{id2}` |
+| `FilterCharactersAsync(...)` | Filters characters | `GET /character?name=...&status=...` |
 
-#### 4. Manejo de Errores
+#### 4. Error Handling
 
-- **404**: Se maneja devolviendo `null` o listas vacías
-- **Errores de red**: Se capturan con `try-catch` y se registran
-- **Paginación**: Control de límites de página
+- **404**: Handled by returning `null` or empty lists
+- **Network errors**: Captured with `try-catch` and logged
+- **Pagination**: Page limit control
 
 ---
 
-## Estructura del Código
+## Code Structure
 
 ```
-ProyectoRickYMorty/
+RickYMortyProject/
 │
 ├── Components/
 │   ├── Layout/
-│   │   ├── NavMenu.razor           # Menú de navegación lateral
-│   │   ├── MainLayout.razor        # Layout principal
-|   |   └── MainLayout.razor.css    # Personalización CSS del Layout principal
+│   │   ├── NavMenu.razor           # Side navigation menu
+│   │   ├── MainLayout.razor        # Main layout
+|   |   └── MainLayout.razor.css    # CSS customization for the main layout
 │   │
 │   ├── Pages/
-│   │   ├── Home.razor              # Página de inicio
-│   │   ├── Characters.razor        # Galería de personajes (página principal)
-|   │   ├── Error.razor             # Página de error, en caso de un error inesperado
-│   │   └── NotFound.razor          # Error 404
+│   │   ├── Home.razor              # Home page
+│   │   ├── Characters.razor        # Character gallery (main page)
+|   │   ├── Error.razor             # Error page, in case of an unexpected error
+│   │   └── NotFound.razor          # 404 error
 │   │
-|   ├── _Imports.razor              # Manejo de imports globales
-│   └── App.razor                   # Componente raíz
+|   ├── _Imports.razor              # Global import handling
+│   └── App.razor                   # Root component
 |
 ├── Models/
-│   ├── ApiResponse.cs              # Modelo de respuesta paginada e Información de Paginación
-│   └── Character.cs                # Modelo del personaje y ubicación
+│   ├── ApiResponse.cs              # Paginated response model and pagination information
+│   └── Character.cs                # Character and location model
 │
 ├── Services/
-│   ├── IRickAndMortyService.cs     # Interfaz del servicio
-│   └── RickAndMortyService.cs      # Implementación del servicio
+│   ├── IRickAndMortyService.cs     # Service interface
+│   └── RickAndMortyService.cs      # Service implementation
 │
 ├── wwwroot/
 │   ├── css/
-│   │   └── app.css                 # Estilos y personalización de toda la aplicación
+│   │   └── app.css                 # Styles and customization for the entire application
 │   │
-|   ├── lib/bootsrap/dist           # Librería de Bootstrap y CSS  
+|   ├── lib/bootsrap/dist           # Bootstrap library and CSS
 |   │
-|   ├── Fonts/                      
-|   |   └── get_scwifty.ttf         # Tipo de letra, estilo Rick Y Morty
+|   ├── Fonts/
+|   |   └── get_scwifty.ttf         # Rick and Morty-style font
 |   |
-│   └── LogoPagina.png              # Logo usado para la aplicación
+│   └── LogoPagina.png              # Logo used for the application
 │
-├── Program.cs                      # Configuración de la aplicación
-└── appsettings.json                # Configuración general
+├── Program.cs                      # Application configuration
+└── appsettings.json                # General configuration
 ```
-*NOTA: Ahí se hizo la estructura general del proyecto, colocando los archivos o carpetas que se añadieron, modificaron o se programaron, sin contar archivos o carpetas adicionales que sirven más que todo para una correcta funcionalidad del proyecto.*
+*NOTE: This is where the project's general structure was set up, including the files and folders that were added, modified, or programmed—excluding additional files and folders that are primarily needed for the project to function correctly.*
 
-###   Componentes Clave
+###   Key Components
 
 #### `RickAndMortyService.cs`
-- Encapsula toda la lógica de comunicación con la API
-- Maneja errores y excepciones
-- Configura opciones de JSON (camelCase)
-- Implementa `IHttpClientFactory` para gestión eficiente de conexiones
+- Encapsulates all the logic for communicating with the API
+- Handles errors and exceptions
+- Configures JSON options (camelCase)
+- Implements `IHttpClientFactory` for efficient connection management
 
 #### `Characters.razor`
-- Página donde se muestran los personajes de Rick Y Morty
-- Componente principal con renderizado interactivo (`@rendermode InteractiveServer`)
-- Gestiona estado de paginación, filtros y votaciones
-- Implementa UI con Bootstrap y CSS personalizado
-- Maneja eventos de usuario (clicks, filtros, navegación)
+- Page displaying the characters from Rick and Morty
+- Main component with interactive rendering (`@rendermode InteractiveServer`)
+- Manages pagination state, filters, and ratings
+- Implements UI using Bootstrap and custom CSS
+- Handles user events (clicks, filters, navigation)
 
 #### `NavMenu.razor`
-- Menú lateral con navegación en las distintas páginas
-- Animaciones y efectos hover
-- Diseño tipo 'liquid-glass'
+- Side menu for navigating between pages
+- Animations and hover effects
+- “Liquid-glass” style design
 
 ---
 
-## Funcionalidades Adicionales
+## Additional Features
 
-###     1. Filtros Avanzados
+### 1. Advanced Filters
 
-La aplicación implementa tres tipos de filtros que se pueden combinar:
+The application implements three types of filters that can be combined:
 
-- **Por Nombre**: Búsqueda parcial (ej: "rick" encuentra "Rick Sanchez")
-- **Por Estado**: Selector con opciones (Vivo, Muerto, Desconocido)
-- **Por Especie**: Búsqueda parcial (ej: "human", "alien")
+- **By Name**: Partial search (e.g., “rick” finds “Rick Sanchez”)
+- **By Status**: Dropdown with options (Alive, Dead, Unknown)
+- **By Species**: Partial search (e.g., “human,” “alien”)
 
-**Características:**
-- Filtros independientes y combinables
-- Botón "Buscar" para aplicar filtros y Botón "Limpiar" para resetear
-- Mensaje dinámico mostrando resultados y filtros activos
-- Manejo de resultados vacíos (404)
+**Features:**
+- Independent and combinable filters
+- “Search” button to apply filters and “Clear” button to reset
+- Dynamic message displaying results and active filters
+- Handling of empty results (404)
 
-###     2. Animaciones Suaves y Estilo Visual Personalizado
+### 2. Smooth Animations and Custom Visual Style
 
-#### Menú de Navegación
-- **Hover effect**: Deslizamiento hacia la derecha + cambio de fondo
-- **Ripple effect**: Onda al hacer clic
-- **Transiciones**: Animación `cubic-bezier` para movimiento fluido
-- **Estado activo**: Barra de color lateral con gradiente verdeoscuro-verdeaguamarina
+#### Navigation Menu
+- **Hover effect**: Slide to the right + background change
+- **Ripple effect**: Ripple on click
+- **Transitions**: `cubic-bezier` animation for smooth movement
+- **Active state**: Side color bar with a dark green to aquamarine gradient
 
-#### Tarjetas de Personajes
-- **Hover**: Elevación con `translateY(-5px)` y sombra aumentada
-- **Transiciones suaves**: 0.3s en todas las interacciones
-- **Efectos en botones**: Scale y sombra al activarse
-- **Loading state**: Spinner animado
+#### Character Cards
+- **Hover**: Lift effect with `translateY(-5px)` and enhanced shadow
+- **Smooth transitions**: 0.3s for all interactions
+- **Button effects**: Scale and drop shadow on activation
+- **Loading state**: Animated spinner
 
-#### Paginación
-- **Botones diferenciados**: Anterior/Siguiente con fondo gris oscuro
-- **Botones de borde**: Primera/Última con borde más grueso e ícono grande
-- **Hover states**: Cambios de color suaves
-- **Página activa**: Resaltada con fondo azul
-
----
-
-## Decisiones Técnicas
-
-### 1. **Blazor InteractiveServer vs InteractiveAuto**
-
-**Decisión:** Se utilizó `@rendermode InteractiveServer`
-
-**Razones:**
-- ✅ Más simple de configurar en .NET 10
-- ✅ No requiere descargar WASM al cliente
-- ✅ Menor peso inicial de la aplicación
-- ✅ Suficiente para las necesidades del proyecto (API externa)
-- ✅ Excelente para aplicaciones con usuarios concurrentes moderados
-
-### 2. **HttpClientFactory en lugar de HttpClient directo**
-
-**Decisión:** Implementar `IHttpClientFactory`
-
-**Razones:**
-- ✅ Evita agotamiento de sockets
-- ✅ Gestión automática del ciclo de vida
-- ✅ Mejor rendimiento en aplicaciones de producción
-- ✅ Facilita testing con clientes mock
-- ✅ Configuración centralizada
-
-### 3. **Patrón Repository con Interfaz**
-
-**Decisión:** Crear `IRickAndMortyService` + implementación
-
-**Razones:**
-- ✅ Inversión de dependencias (SOLID)
-- ✅ Facilita testing unitario
-- ✅ Permite cambiar implementación sin afectar componentes
-- ✅ Encapsula lógica de negocio
-- ✅ Mejor mantenibilidad
-
-### 4. **Manejo de Estado con Diccionarios**
-
-**Decisión:** Usar `Dictionary<int, int>` para puntajes
-
-**Razones:**
-- ✅ Acceso O(1) por ID de personaje (Acceso instantáneo) 
-- ✅ Persiste durante la sesión de navegación
-- ✅ Simple y eficiente para estado local
-- ❌ No persiste entre recargas (Decisión consciente para simplicidad. Se puede realizar en un futuro)
-
-### 5. **Bootstrap + CSS Personalizado**
-
-**Decisión:** Combinar Bootstrap con Personalización CSS
-
-**Razones:**
-- ✅ Bootstrap proporciona una base personalizada de la página
-- ✅ Personalización CSS para identidad visual única
-- ✅ Evita look "genérico" de frameworks
-- ✅ Mantiene consistencia en componentes
-- ✅ Fácil de mantener y extender
-
-### 6. **JsonSerializerOptions con camelCase**
-
-**Decisión:** Configurar `PropertyNamingPolicy.CamelCase`
-
-**Razones:**
-- ✅ La API de Rick and Morty usa camelCase
-- ✅ Convención estándar en APIs REST
-- ✅ Evita errores de deserialización
-- ✅ Configuración centralizada en el servicio
-
-### 7. **Paginación Client-Side**
-
-**Decisión:** No implementar infinite scroll, usar paginación tradicional
-
-**Razones:**
-- ✅ Mejor UX, debido a la cantidad tan grande personajes (826 personajes)
-- ✅ Control explícito del usuario
-- ✅ Menor consumo de memoria
-- ✅ Más accesible
-- ✅ Coincide con capacidades de la API
-
-### 8. **Filtros con Peticiones Nuevas vs Cache Local**
-
-**Decisión:** Hacer petición nueva a la API por cada filtro
-
-**Razones:**
-- ✅ Resultados siempre actualizados
-- ✅ Menor uso de memoria en el cliente
-- ✅ Aprovecha capacidades nativas de la API
-- ✅ Mejor para datos que cambian frecuentemente
-- ❌ Más peticiones de red (aceptable dado que la API es gratuita y rápida)
+#### Pagination
+- **Distinct buttons**: Previous/Next with dark gray background
+- **Bordered buttons**: First/Last with thicker border and large icon
+- **Hover states**: Smooth color changes
+- **Active page**: Highlighted with a blue background
 
 ---
 
-## Tecnologías Utilizadas
+## Technical Decisions
 
-| Tecnología | Versión | Propósito |
+### 1. **Blazor InteractiveServer vs. InteractiveAuto**
+
+**Decision:** `@rendermode InteractiveServer` was used
+
+**Reasons:**
+- ✅ Simpler to configure in .NET 10
+- ✅ Does not require downloading WASM to the client
+- ✅ Lower initial application size
+- ✅ Sufficient for the project’s needs (external API)
+- ✅ Excellent for applications with moderate concurrent users
+### 2. **HttpClientFactory Instead of Direct HttpClient**
+
+**Decision:** Implement `IHttpClientFactory`
+
+**Reasons:**
+- ✅ Prevents socket exhaustion
+- ✅ Automatic lifecycle management
+- ✅ Better performance in production applications
+- ✅ Facilitates testing with mock clients
+- ✅ Centralized configuration
+
+### 3. **Repository Pattern with Interface**
+
+**Decision:** Create `IRickAndMortyService` + implementation
+
+**Reasons:**
+- ✅ Dependency inversion (SOLID)
+- ✅ Facilitates unit testing
+- ✅ Allows changing the implementation without affecting other components
+- ✅ Encapsulates business logic
+- ✅ Better maintainability
+
+### 4. **State Management with Dictionaries**
+
+**Decision:** Use `Dictionary<int, int>` for scores
+
+**Reasons:**
+- ✅ O(1) access by character ID (instant access)
+- ✅ Persists throughout the browsing session
+- ✅ Simple and efficient for local state
+- ❌ Does not persist between page reloads (a conscious decision for simplicity; may be implemented in the future)
+
+### 5. **Bootstrap + Custom CSS**
+
+**Decision:** Combine Bootstrap with custom CSS
+
+**Reasons:**
+- ✅ Bootstrap provides a customized page foundation
+- ✅ Custom CSS for a unique visual identity
+- ✅ Avoids the “generic” look of frameworks
+- ✅ Maintains consistency across components
+- ✅ Easy to maintain and extend
+
+### 6. **JsonSerializerOptions with camelCase**
+
+**Decision:** Set `PropertyNamingPolicy.CamelCase`
+
+### 6. **JsonSerializerOptions with camelCase**
+
+**Decision:** Set `PropertyNamingPolicy.CamelCase`
+
+**Reasons:**
+- ✅ The Rick and Morty API uses camelCase
+- ✅ Standard convention in REST APIs
+- ✅ Prevents deserialization errors
+- ✅ Centralized configuration within the service
+
+### 7. **Client-Side Pagination**
+
+**Decision:** Do not implement infinite scroll; use traditional pagination
+
+**Reasons:**
+- ✅ Better UX, due to the very large number of characters (826 characters)
+- ✅ Explicit user control
+- ✅ Lower memory consumption
+- ✅ More accessible
+- ✅ Aligns with API capabilities
+
+### 8. **Filters Using New Requests vs. Local Cache**
+
+**Decision:** Make a new request to the API for each filter
+
+**Reasons:**
+- ✅ Results are always up to date
+- ✅ Lower memory usage on the client side
+- ✅ Leverages native API capabilities
+- ✅ Better for frequently changing data
+- ❌ More network requests (acceptable since the API is free and fast)
+
+---
+
+## Technologies Used
+
+| Technology | Version | Purpose |
 |------------|---------|-----------|
-| .NET | 10.0 | Framework principal |
-| Blazor | .NET 10 | Frontend interactivo |
-| Bootstrap | 5.3.8 | Framework CSS |
-| Bootstrap Icons | 1.11.0 | Iconografía |
-| C# | 12.0 | Lenguaje de programación |
-| Rick and Morty API | v1 | Fuente de datos |
+| .NET | 10.0 | Main framework |
+| Blazor | .NET 10 | Interactive frontend |
+| Bootstrap | 5.3.8 | CSS framework |
+| Bootstrap Icons | 1.11.0 | Icon set |
+| C# | 12.0 | Programming language |
+| Rick and Morty API | v1 | Data source |
+
+---
+## Screenshots
+
+### Character Gallery
+![Gallery](docs/Screenshot(1).png)
+
+### Filters
+![Filters](docs/Screenshot(2).png)
+
+### Navigation Menu
+![Menu](docs/Screenshot%20(3).png)
 
 ---
 
-## Capturas de Pantalla
-
-### Galería de Personajes
-![Galería](docs/Captura%20de%20pantalla(1).png)
-
-### Filtros
-![Filtros](docs/Captura%20de%20pantalla(2).png)
-
-### Menú de Navegación
-![Menú](docs/Captura%20de%20pantalla%20(3).png)
+## Functional Tests
+**A file named “Tests” has been added to the “docs” folder, where you can find the functional tests for the project**
 
 ---
 
-## Pruebas Funcionales
-**Se agregó un archivo llamado Pruebas en la carpeta docs, en donde se puede encontrar las Pruebas funcionales para el proyecto**
+## 🔮 Future Improvements
+
+- [ ] Implement score persistence (LocalStorage)
+- [ ] Add a character details page where users can access a page with each character’s details, more photos of the character, and the episode(s) in which they appear
+- [ ] Add dark mode
+- [ ] Implement PWA (Progressive Web App)
+- [ ] Make it responsive for all types of devices
 
 ---
 
-## 🔮 Mejoras Futuras
-
-- [ ] Implementar persistencia de puntajes (LocalStorage)
-- [ ] Agregar página de detalles por personaje, en donde el usuario pueda acceder a una página con cada detalle del personaje, más fotos del personaje, y en qué episodio(s) aparece
-- [ ] Agregar modo oscuro
-- [ ] Implementar PWA (Progressive Web App)
-- [ ] Hacerla Responsiva para todo tipo de dispositivos
-
----
-
-## Autor
+## Author
 
 **Juan Manuel Usuga Galeano**
